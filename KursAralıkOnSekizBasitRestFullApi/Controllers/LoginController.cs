@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BusinessLayer;
+using DataLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,7 +9,7 @@ using System.Web.Http;
 
 namespace KursAralıkOnSekizBasitRestFullApi.Controllers
 {
-    public class YonetimController : ApiController
+    public class LoginController : ApiController
     {
         // GET api/<controller>
         public IEnumerable<string> Get()
@@ -22,8 +24,16 @@ namespace KursAralıkOnSekizBasitRestFullApi.Controllers
         }
 
         // POST api/<controller>
-        public void Post([FromBody] string value)
+        public HttpResponseMessage Post(string Username,string Password)
         {
+            TResult result = new TResult();
+            LoginIslemleri loginIslemleri = new LoginIslemleri();
+           result = loginIslemleri.Login(Username, Password);
+
+          var response =  Request.CreateResponse<TResult>(HttpStatusCode.OK, result);
+
+            return response;
+
         }
 
         // PUT api/<controller>/5
